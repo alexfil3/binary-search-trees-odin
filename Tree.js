@@ -1,5 +1,7 @@
 import Node from "./Node.js";
 import sortArray from "./helpers/sortArray.js";
+import prettyPrint from "./helpers/prettyPrint.js";
+import getSuccessor from "./helpers/getSuccessor.js";
 
 class Tree {
     constructor(arr) {
@@ -33,10 +35,6 @@ class Tree {
         return node;
     }
 
-    // if we don't find a value in our root
-    // 1 case delete leaf node
-    // 2 case delete a node with only one child
-    // 3 case the complex one is to delete node with two child
     deleteItem(value, node = this.root) {
         if (node === null) return null;
 
@@ -45,27 +43,15 @@ class Tree {
         } else if (node.data > value) {
             node.left = this.deleteItem(value, node.left);
         } else {
-            if (node.left === null) {
-                const temp = node.right;
+            if (node.left === null) return node.right;    
+            if (node.right === null) return node.left;
 
-                return temp;
-            } else if (node.right === null) {
-                const temp = node.left;
-            }
+            const successor = getSuccessor(node);
+            node.data = successor.data;
+            node.right = this.deleteItem(successor.data, node.right);
         }
-    }
 
-    prettyPrint(node = this.root, prefix = '', isLeft = true) {
-        if (node === null) {
-            return;
-        }
-        if (node.right !== null) {
-            this.prettyPrint(node.right, `${prefix}${isLeft ? "│   " : "    "}`, false);
-        }
-        console.log(`${prefix}${isLeft ? "└── " : "┌── "}${node.data}`);
-        if (node.left !== null) {
-            this.prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
-        }
+        return node;
     }
 }
 
@@ -73,4 +59,7 @@ class Tree {
 const tree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
 
 tree.insert(100)
-tree.prettyPrint()
+prettyPrint(tree.root);
+
+tree.deleteItem(0)
+prettyPrint(tree.root);
