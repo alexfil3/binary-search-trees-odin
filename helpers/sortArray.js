@@ -1,4 +1,4 @@
-sortArray(arr) {
+function sortArray(arr) {
     const sortedUniqueArr = arr.reduce((acc, n) => {
         if (!acc.includes(n)) acc.push(n);
         return acc;
