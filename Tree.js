@@ -53,13 +53,23 @@ class Tree {
 
         return node;
     }
+
+    find(value, node = this.root) {
+        if (node === null) return null;
+
+        if (node.data === value) return node;
+
+        if (node.data > value) return this.find(value, node.left);
+        else return this.find(value, node.right);
+    }
 }
 
 // const tree = new Tree([1, 2, 3, 4]);
 const tree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
 
-tree.insert(100)
+// tree.insert(100)
 prettyPrint(tree.root);
 
-tree.deleteItem(0)
-prettyPrint(tree.root);
+// tree.deleteItem(0)
+// prettyPrint(tree.root);
+console.log(tree.find(0))
