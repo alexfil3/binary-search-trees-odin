@@ -62,14 +62,42 @@ class Tree {
         if (node.data > value) return this.find(value, node.left);
         else return this.find(value, node.right);
     }
+
+    // recursive implementation
+    // levelOrder(callback, node = this.root) {
+    //     if (!callback) throw new Error('Callback is required');
+
+    //     if (node === null) return;
+
+    //     if (node.right)
+    // }
+
+    // iteration implementation
+    levelOrder(callback, node = this.root) {
+        if (!callback) throw new Error('Callback is required');
+
+        if (node === null) return;
+
+        const queue = [node];
+
+        while (queue.length > 0) {
+            const current = queue.shift();
+
+            callback(current);
+
+            if (current.left) queue.push(current.left);
+            if (current.right) queue.push(current.right);
+        }
+    }
 }
 
 // const tree = new Tree([1, 2, 3, 4]);
 const tree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
 
 // tree.insert(100)
-prettyPrint(tree.root);
+// prettyPrint(tree.root);
 
 // tree.deleteItem(0)
-// prettyPrint(tree.root);
-console.log(tree.find(0))
+prettyPrint(tree.root);
+// console.log(tree.find(0))
+tree.levelOrder()
