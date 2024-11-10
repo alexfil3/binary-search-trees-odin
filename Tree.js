@@ -63,7 +63,6 @@ class Tree {
         else return this.find(value, node.right);
     }
 
-    // recursive implementation
     levelOrderRecursive(callback, queue = [this.root]) {
         if (!callback) throw new Error('Callback is required');
 
@@ -79,7 +78,6 @@ class Tree {
         this.levelOrderRecursive(callback, queue);
     }
 
-    // iteration implementation
     levelOrderIterative(callback, node = this.root) {
         if (!callback) throw new Error('Callback is required');
 
@@ -96,6 +94,36 @@ class Tree {
             if (current.right) queue.push(current.right);
         }
     }
+
+    inOrder(callback, node = this.root) {
+        if (!callback) throw new Error('Callback is required');
+
+        if (node === null) return;
+
+        if (node.left) this.inOrder(callback, node.left);
+        callback(node);
+        if (node.right) this.inOrder(callback, node.right);
+    }
+
+    preOrder(callback, node = this.root) {
+        if (!callback) throw new Error('Callback is required');
+
+        if (node === null) return;
+
+        callback(node);
+        if (node.left) this.preOrder(callback, node.left);
+        if (node.right) this.preOrder(callback, node.right);
+    }
+
+    postOrder(callback, node = this.root) {
+        if (!callback) throw new Error('Callback is required');
+
+        if (node === null) return;
+
+        if (node.left) this.postOrder(callback, node.left);
+        if (node.right) this.postOrder(callback, node.right);
+        callback(node);
+    }
 }
 
 // const tree = new Tree([1, 2, 3, 4]);
@@ -106,5 +134,4 @@ const tree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
 
 // tree.deleteItem(0)
 prettyPrint(tree.root);
-// console.log(tree.find(0))
-tree.levelOrderRecursive(3)
+tree.postOrder(67)
