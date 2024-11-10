@@ -150,8 +150,27 @@ class Tree {
             return rightDepth === -1 ? -1 : rightDepth + 1;
         }
     }
+
+    isBalanced(node = this.root) {
+        if (node === null) return true;
+
+        const leftHeight = this.height(node.left);
+        const rightHeight = this.height(node.right);
+        const heightDiff = Math.abs(leftHeight - rightHeight);
+
+        if (heightDiff > 1) {
+            return false;
+        }
+
+        return this.isBalanced(node.left) && this.isBalanced(node.right);
+    } 
 }
 
 const tree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
 
+// tree.insert(100)
+// tree.insert(101)
+// tree.insert(102)
+// tree.insert(103)
 prettyPrint(tree.root);
+console.log(tree.isBalanced())
