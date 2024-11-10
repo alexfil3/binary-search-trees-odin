@@ -133,8 +133,25 @@ class Tree {
 
         return Math.max(leftHeight, rightHeight) + 1;
     }
+
+    depth(nodeToFind, node = this.root) {
+        if (node === null) return -1;
+
+        if (node === nodeToFind ) return 0;
+
+        if (node.data > nodeToFind.data) {
+            const leftDepth = this.depth(nodeToFind, node.left);
+
+           return leftDepth === -1 ? -1 : leftDepth + 1; 
+        }
+        if (node.data < nodeToFind.data) {
+            const rightDepth = this.depth(nodeToFind, node.right);
+
+            return rightDepth === -1 ? -1 : rightDepth + 1;
+        }
+    }
 }
 
 const tree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
 
-// prettyPrint(tree.root);
+prettyPrint(tree.root);
