@@ -164,13 +164,25 @@ class Tree {
 
         return this.isBalanced(node.left) && this.isBalanced(node.right);
     } 
+
+    rebalance() {
+        if (this.isBalanced(this.root)) return;
+
+        const arr = [];
+
+        this.inOrder(node => arr.push(node.data));
+        
+        this.root = this.buildTree(arr);
+    }
 }
 
 const tree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
 
-// tree.insert(100)
-// tree.insert(101)
-// tree.insert(102)
-// tree.insert(103)
+tree.insert(100)
+tree.insert(101)
+tree.insert(102)
+tree.insert(103)
 prettyPrint(tree.root);
-console.log(tree.isBalanced())
+// tree.inOrder(78);
+tree.rebalance();
+prettyPrint(tree.root);
